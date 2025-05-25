@@ -5,7 +5,15 @@ ENV STATICJINJAPLUS_VERSION=${STATICJINJAPLUS_VERSION}
 
 WORKDIR /opt/StaticJinjaPlus
 
-RUN apt-get update && apt-get install -y --no-install-recommends build-essential curl && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        build-essential \
+        curl \
+        ca-certificates \
+        python3 \
+        python3-pip \
+        python3-venv && \
+    rm -rf /var/lib/apt/lists/*
 
 RUN if [ "$STATICJINJAPLUS_VERSION" = "main" ]; then \
       curl -L https://github.com/MrDave/StaticJinjaPlus/archive/refs/heads/main.tar.gz -o /tmp/app.tar.gz ; \
@@ -15,6 +23,10 @@ RUN if [ "$STATICJINJAPLUS_VERSION" = "main" ]; then \
 
 RUN tar -xzf /tmp/app.tar.gz --strip-components=1 -C /opt/StaticJinjaPlus && rm /tmp/app.tar.gz
 
+RUN python3 -m venv /opt/venv
+
+ENV PATH="/opt/venv/bin:$PATH"
+
 RUN pip install --no-cache-dir -r requirements.txt
 
-CMD ["python", "main.py"]
+CMD ["sh", "-c", "mkdir -p build && python main.py --srcpath templates_example --outpath build"]

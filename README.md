@@ -12,66 +12,46 @@
 
 
 ### Структура
-- `Dockerfile.slim` — универсальный Dockerfile для Python Slim, поддерживает параметризацию версии через ARG.
-- `Dockerfile.ubuntu` — универсальный Dockerfile для Ubuntu, поддерживает параметризацию версии через ARG.
+- `docker_slim/Dockerfile` — универсальный Dockerfile для Python Slim, поддерживает параметризацию версии через ARG.
+- `docker_ubuntu/Dockerfile` — универсальный Dockerfile для Ubuntu, поддерживает параметризацию версии через ARG.
+
 
 ## Как собрать Docker-образ
+Чтобы собрать образ с нужной версией StaticJinjaPlus, укажите тег в аргументе `STATICJINJAPLUS_VERSION`.
 
-1. Сборка образа с нужной версией (Python Slim)
-
-```bash
-docker build -f Dockerfile.slim
---build-arg STATICJINJAPLUS_VERSION=0.1.1
--t you_name/staticjinjaplus:0.1.1-slim .
-```
-
-2. Сборка develop-образа (из main-ветки, Python Slim)
+1. Сборка стабильной версии (Python Slim):
 
 ```bash
-docker build -f Dockerfile.slim
---build-arg STATICJINJAPLUS_VERSION=main
--t you_name/staticjinjaplus:develop-slim .
+docker build -f docker_slim/Dockerfile --build-arg STATICJINJAPLUS_VERSION=0.1.1 -t static-jinja-plus:0.1.1-slim .
 ```
 
-3. Сборка образа на базе Ubuntu
+2. Сборка develop-версии (из ветки main, Python Slim):
 
 ```bash
-docker build -f Dockerfile.ubuntu
---build-arg STATICJINJAPLUS_VERSION=0.1.1
--t you_name/staticjinjaplus:0.1.1-ubuntu .
+docker build -f docker_slim/Dockerfile --build-arg STATICJINJAPLUS_VERSION=main -t static-jinja-plus:develop-slim .
 ```
 
-4. Сборка develop-образа (из main-ветки, Ubuntu)
-
+3. Сборка стабильной версии на базе Ubuntu:
 
 ```bash
-docker build -f Dockerfile.ubuntu
---build-arg STATICJINJAPLUS_VERSION=main
--t you_name/staticjinjaplus:develop-ubuntu .
+docker build -f docker_ubuntu/Dockerfile --build-arg STATICJINJAPLUS_VERSION=0.1.1 -t static-jinja-plus:0.1.1-ubuntu .
 ```
 
-5. Посмотреть образы
+4. Сборка develop-версии на базе Ubuntu:
 ```bash
-docker images
+docker build -f docker_ubuntu/Dockerfile --build-arg STATICJINJAPLUS_VERSION=main -t static-jinja-plus:develop-ubuntu .
 ```
 
-6. Пример запуска контейнера
-
+## Как запустить контейнер
+Рекомендованная стабильная версия. 
+Пример запуска контейнера:
 ```bash
-docker run --rm -it you_name/staticjinjaplus:0.1.1-slim
+docker run --rm -it static-jinja-plus:0.1.1-slim
+docker run --rm -it static-jinja-plus:develop-slim
+docker run --rm -it static-jinja-plus:0.1.1-ubuntu
+docker run --rm -it static-jinja-plus:develop-ubuntu
 ```
 
-
-## Пример команд для сборки
-
-| Базовый образ      | Версия StaticJinjaPlus | Dockerfile         | Пример команды                                                                 |
-|--------------------|-----------------------|--------------------|--------------------------------------------------------------------------------|
-| python:3.12-slim   | 0.1.1                 | Dockerfile.slim    | `docker build -f Dockerfile.slim --build-arg STATICJINJAPLUS_VERSION=0.1.1 -t you_name/staticjinjaplus:0.1.1-slim .` |
-| ubuntu:22.04       | 0.1.1                 | Dockerfile.ubuntu  | `docker build -f Dockerfile.ubuntu --build-arg STATICJINJAPLUS_VERSION=0.1.1 -t you_name/staticjinjaplus:0.1.1-ubuntu .` |
-| python:3.12-slim   | main (develop)        | Dockerfile.slim    | `docker build -f Dockerfile.slim --build-arg STATICJINJAPLUS_VERSION=main -t you_name/staticjinjaplus:develop-slim .` |
-| ubuntu:22.04       | main (develop)        | Dockerfile.ubuntu  | `docker build -f Dockerfile.ubuntu --build-arg STATICJINJAPLUS_VERSION=main -t you_name/staticjinjaplus:develop-ubuntu .` |
-
----
 
 ## Как это работает
 
