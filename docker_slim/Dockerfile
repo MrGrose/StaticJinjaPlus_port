@@ -20,5 +20,3 @@ RUN tar -xzf /tmp/app.tar.gz --strip-components=1 -C /opt/StaticJinjaPlus && rm 
 RUN python3 -m venv venv
 
 RUN . venv/bin/activate && pip install --no-cache-dir -r requirements.txt
-
-CMD ["sh", "-c", "mkdir -p build && . venv/bin/activate && python main.py --srcpath templates_example --outpath build"]
