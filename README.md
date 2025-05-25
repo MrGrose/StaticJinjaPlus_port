@@ -78,3 +78,6 @@ docker run --rm -it you_name/staticjinjaplus:0.1.1-slim
 - Dockerfile скачивает архив исходников StaticJinjaPlus с GitHub по нужной версии (тегу) или из ветки main.
 - Сборка параметризуется через `ARG STATICJINJAPLUS_VERSION`.
 - Для разных базовых образов используются разные Dockerfile: slim — для минимального размера, ubuntu — для расширенной среды.
+
+## Цель проекта
+Код написан в образовательных целях на онлайн-курсе [dvmn.org](https://dvmn.org/modules/).
