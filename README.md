@@ -23,32 +23,28 @@
 
 ```bash
 docker build -f docker_slim/Dockerfile --build-arg STATICJINJAPLUS_VERSION=0.1.1 -t static-jinja-plus:0.1.1-slim .
-```
-
-2. Сборка develop-версии (из ветки main, Python Slim):
-
-```bash
+docker build -f docker_slim/Dockerfile --build-arg STATICJINJAPLUS_VERSION=0.1.0 -t static-jinja-plus:0.1.0-slim .
 docker build -f docker_slim/Dockerfile --build-arg STATICJINJAPLUS_VERSION=main -t static-jinja-plus:develop-slim .
 ```
 
-3. Сборка стабильной версии на базе Ubuntu:
+2. Сборка стабильной версии на базе Ubuntu:
 
 ```bash
 docker build -f docker_ubuntu/Dockerfile --build-arg STATICJINJAPLUS_VERSION=0.1.1 -t static-jinja-plus:0.1.1-ubuntu .
-```
-
-4. Сборка develop-версии на базе Ubuntu:
-```bash
+docker build -f docker_ubuntu/Dockerfile --build-arg STATICJINJAPLUS_VERSION=0.1.0 -t static-jinja-plus:0.1.0-ubuntu .
 docker build -f docker_ubuntu/Dockerfile --build-arg STATICJINJAPLUS_VERSION=main -t static-jinja-plus:develop-ubuntu .
 ```
+
 
 ## Как запустить контейнер
 Рекомендованная стабильная версия. 
 Пример запуска контейнера:
 ```bash
 docker run --rm -it static-jinja-plus:0.1.1-slim
+docker run --rm -it static-jinja-plus:0.1.0-slim
 docker run --rm -it static-jinja-plus:develop-slim
 docker run --rm -it static-jinja-plus:0.1.1-ubuntu
+docker run --rm -it static-jinja-plus:0.1.0-ubuntu
 docker run --rm -it static-jinja-plus:develop-ubuntu
 ```
 
