@@ -12,7 +12,6 @@
 
 
 ## Как собрать Docker-образ
-Чтобы собрать образ с нужной версией StaticJinjaPlus, укажите тег в аргументе `STATICJINJAPLUS_VERSION`.
 
 1. Сборка версии (Python Slim):
 ```bash
