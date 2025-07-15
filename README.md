@@ -11,48 +11,38 @@
 - Запустить контейнер.
 
 
-### Структура
-- `docker_slim/Dockerfile` — универсальный Dockerfile для Python Slim, поддерживает параметризацию версии через ARG.
-- `docker_ubuntu/Dockerfile` — универсальный Dockerfile для Ubuntu, поддерживает параметризацию версии через ARG.
-
-
 ## Как собрать Docker-образ
 Чтобы собрать образ с нужной версией StaticJinjaPlus, укажите тег в аргументе `STATICJINJAPLUS_VERSION`.
 
-1. Сборка стабильной версии (Python Slim):
-
+1. Сборка версии (Python Slim):
 ```bash
-docker build -f docker_slim/Dockerfile --build-arg STATICJINJAPLUS_VERSION=0.1.1 -t static-jinja-plus:0.1.1-slim .
-docker build -f docker_slim/Dockerfile --build-arg STATICJINJAPLUS_VERSION=0.1.0 -t static-jinja-plus:0.1.0-slim .
-docker build -f docker_slim/Dockerfile --build-arg STATICJINJAPLUS_VERSION=main -t static-jinja-plus:develop-slim .
+docker build -f docker_slim/Dockerfile -t static-jinja-plus:0.1.1-slim 
+docker build -f docker_slim_dev/Dockerfile -t static-jinja-plus:develop-slim 
+```
+При создании образа 0.1.0 надо явно указать хэш и версию
+```bash
+docker build -f docker_slim/Dockerfile -t static-jinja-plus:0.1.0-slim \
+    --build-arg VERSION=0.1.0 \
+    --build-arg HASH=3555bcfd670e134e8360ad934cb5bad1bbe2a7dad24ba7cafa0a3bb8b23c6444
 ```
 
-2. Сборка стабильной версии на базе Ubuntu:
+2. Сборка версии на базе Ubuntu:
 
 ```bash
-docker build -f docker_ubuntu/Dockerfile --build-arg STATICJINJAPLUS_VERSION=0.1.1 -t static-jinja-plus:0.1.1-ubuntu .
-docker build -f docker_ubuntu/Dockerfile --build-arg STATICJINJAPLUS_VERSION=0.1.0 -t static-jinja-plus:0.1.0-ubuntu .
-docker build -f docker_ubuntu/Dockerfile --build-arg STATICJINJAPLUS_VERSION=main -t static-jinja-plus:develop-ubuntu .
+docker build -f docker_ubuntu/Dockerfile -t static-jinja-plus:0.1.1-ubuntu
+docker build -f docker_ubuntu_dev/Dockerfile -t static-jinja-plus:develop-ubuntu
 ```
 
-
-## Как запустить контейнер
-Рекомендованная стабильная версия. 
-Пример запуска контейнера:
+При создании образа 0.1.0 надо явно указать хэш и версию
 ```bash
-docker run --rm -it static-jinja-plus:0.1.1-slim
-docker run --rm -it static-jinja-plus:0.1.0-slim
-docker run --rm -it static-jinja-plus:develop-slim
-docker run --rm -it static-jinja-plus:0.1.1-ubuntu
-docker run --rm -it static-jinja-plus:0.1.0-ubuntu
-docker run --rm -it static-jinja-plus:develop-ubuntu
+docker build -f docker_ubuntu/Dockerfile -t static-jinja-plus:0.1.1-ubuntu \
+    --build-arg VERSION=0.1.0 \
+    --build-arg HASH=3555bcfd670e134e8360ad934cb5bad1bbe2a7dad24ba7cafa0a3bb8b23c6444
 ```
-
 
 ## Как это работает
 
 - Dockerfile скачивает архив исходников StaticJinjaPlus с GitHub по нужной версии (тегу) или из ветки main.
-- Сборка параметризуется через `ARG STATICJINJAPLUS_VERSION`.
 - Для разных базовых образов используются разные Dockerfile: slim — для минимального размера, ubuntu — для расширенной среды.
 
 ## Цель проекта
